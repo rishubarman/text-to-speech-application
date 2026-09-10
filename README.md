@@ -120,6 +120,7 @@ The application allows users to enter text, select a language and voice, generat
                     │      Player         │
                     └─────────────────────┘
 
+```
 ## 📸 Screenshots
 
 ### 🔐 Login
