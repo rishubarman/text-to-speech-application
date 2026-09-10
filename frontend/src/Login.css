@@ -1,0 +1,164 @@
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 480px;
+}
+
+.login-logo {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    color: #17213c;
+    margin-bottom: 25px;
+}
+
+.login-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 45px rgba(45, 55, 100, 0.12);
+    border: 1px solid #e4e8f5;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header h1 {
+    margin: 0 0 10px;
+    font-size: 34px;
+    color: #17213c;
+}
+
+.login-header p {
+    margin: 0;
+    color: #6d7a99;
+    font-size: 16px;
+}
+
+.login-error {
+    background: #fff1f1;
+    border: 1px solid #ffbcbc;
+    color: #d93025;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 22px;
+    font-size: 14px;
+}
+
+.login-field {
+    margin-bottom: 20px;
+}
+
+.login-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #273451;
+}
+
+.login-field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #ccd4e5;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.login-field input:focus {
+    border-color: #5146e5;
+    box-shadow: 0 0 0 3px rgba(81, 70, 229, 0.1);
+}
+
+.login-button {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 8px;
+    background: #5146e5;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.login-button:hover {
+    background: #4338ca;
+}
+
+.login-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.create-account {
+    margin-top: 25px;
+    text-align: center;
+    color: #6d7a99;
+    font-size: 15px;
+}
+
+.create-account-button {
+    border: none;
+    background: none;
+    color: #5146e5;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 6px;
+    font-size: 15px;
+}
+
+.create-account-button:hover {
+    text-decoration: underline;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: -2px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .login-page {
+        padding: 20px 15px;
+    }
+
+    .login-card {
+        padding: 28px 20px;
+    }
+
+    .login-header h1 {
+        font-size: 28px;
+    }
+
+    .login-logo {
+        font-size: 24px;
+    }
+}
