@@ -119,3 +119,20 @@ The application allows users to enter text, select a language and voice, generat
                     │   React Audio       │
                     │      Player         │
                     └─────────────────────┘
+
+## 📸 Screenshots
+
+### 🔐 Login
+![Login](screenshots/login.png)
+
+### 📝 Register
+![Register](screenshots/register.png)
+
+### 🏠 Home
+![Home](screenshots/home.png)
+
+### 👤 Profile
+![Profile](screenshots/profile.png)
+
+### 📜 History
+![History](screenshots/history.png)
