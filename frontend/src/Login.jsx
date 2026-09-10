@@ -4,15 +4,15 @@ import "./Login.css";
 const API_BASE_URL = "http://localhost:8080";
 
 function Login({ onLogin, onShowRegister }) {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [lampOn, setLampOn] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async (event) => {
-
         event.preventDefault();
 
         setError("");
@@ -30,17 +30,14 @@ function Login({ onLogin, onShowRegister }) {
         setLoading(true);
 
         try {
-
             const response = await fetch(
                 `${API_BASE_URL}/api/auth/login`,
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
-
                     body: JSON.stringify({
                         email: email.trim(),
                         password: password
@@ -48,18 +45,10 @@ function Login({ onLogin, onShowRegister }) {
                 }
             );
 
-            const responseText =
-                await response.text();
+            const responseText = await response.text();
 
-            console.log(
-                "Login status:",
-                response.status
-            );
-
-            console.log(
-                "Login response:",
-                responseText
-            );
+            console.log("Login status:", response.status);
+            console.log("Login response:", responseText);
 
             let data = null;
 
@@ -70,7 +59,6 @@ function Login({ onLogin, onShowRegister }) {
             }
 
             if (!response.ok) {
-
                 throw new Error(
                     data?.message ||
                     data?.error ||
@@ -80,27 +68,19 @@ function Login({ onLogin, onShowRegister }) {
             }
 
             if (!data?.token) {
-
                 throw new Error(
                     "Login successful, but token was not received."
                 );
             }
 
-            console.log(
-                "Login successful:",
-                data
-            );
+            console.log("Login successful:", data);
 
             if (onLogin) {
                 onLogin(data);
             }
 
         } catch (err) {
-
-            console.error(
-                "Login error:",
-                err
-            );
+            console.error("Login error:", err);
 
             setError(
                 err.message ||
@@ -108,59 +88,111 @@ function Login({ onLogin, onShowRegister }) {
             );
 
         } finally {
-
             setLoading(false);
         }
     };
 
-    /*
-     * THIS FUNCTION OPENS REGISTER PAGE
-     */
     const handleCreateAccount = () => {
-
-        console.log(
-            "Create Account clicked"
-        );
+        console.log("Create Account clicked");
 
         if (onShowRegister) {
             onShowRegister();
         } else {
-            console.error(
-                "onShowRegister prop is missing!"
-            );
+            console.error("onShowRegister prop is missing!");
         }
     };
 
     return (
+        <div
+            className={`login-page ${lampOn ? "lamp-active" : ""}`}
+        >
 
-        <div className="login-page">
+            {/* Ambient room glow */}
+            <div className="ambient-glow"></div>
 
-            <div className="login-container">
+            {/* Hanging lamp */}
+            <div
+                className="lamp-area"
+                onMouseEnter={() => setLampOn(true)}
+                onMouseLeave={() => setLampOn(false)}
+                onClick={() => setLampOn((current) => !current)}
+                role="button"
+                tabIndex="0"
+                aria-label="Toggle lamp"
+                onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        setLampOn((current) => !current);
+                    }
+                }}
+            >
+                <div className="lamp-wire"></div>
 
-                <div className="login-logo">
-                    🔊 VoiceFlow
+                <div className="lamp-fixture">
+                    <div className="lamp-cap"></div>
+
+                    <div className="lamp-bulb">
+                        <div className="bulb-core"></div>
+                    </div>
+
+                    <div className="lamp-shade"></div>
                 </div>
 
-                <div className="login-card">
+                <div className="lamp-light-beam"></div>
+
+                <div className="lamp-hint">
+                    {lampOn ? "Lamp ON" : "Hover to turn on"}
+                </div>
+            </div>
+
+            {/* Main content */}
+            <main className="login-content">
+
+                <div className="voiceflow-brand">
+                    <div className="brand-icon">
+                        <span>◖</span>
+                        <span>◗</span>
+                    </div>
+
+                    <div>
+                        <div className="brand-name">
+                            VoiceFlow
+                        </div>
+
+                        <div className="brand-subtitle">
+                            TEXT TO SPEECH
+                        </div>
+                    </div>
+                </div>
+
+                <section className="login-card">
+
+                    <div className="card-top-line"></div>
 
                     <div className="login-header">
 
+                        <div className="welcome-icon">
+                            <span>◉</span>
+                        </div>
+
+                        <p className="eyebrow">
+                            WELCOME BACK
+                        </p>
+
                         <h1>
-                            Welcome Back
+                            Sign in to VoiceFlow
                         </h1>
 
-                        <p>
-                            Login to your Text to Speech account
+                        <p className="login-description">
+                            Turn your words into natural speech.
                         </p>
 
                     </div>
 
                     {error && (
-
                         <div className="login-error">
-                            ⚠ {error}
+                            <span className="error-icon">!</span>
+                            <span>{error}</span>
                         </div>
-
                     )}
 
                     <form onSubmit={handleLogin}>
@@ -168,38 +200,79 @@ function Login({ onLogin, onShowRegister }) {
                         <div className="login-field">
 
                             <label htmlFor="login-email">
-                                Email
+                                Email address
                             </label>
 
-                            <input
-                                id="login-email"
-                                type="email"
-                                value={email}
-                                onChange={(event) =>
-                                    setEmail(event.target.value)
-                                }
-                                placeholder="Enter your email"
-                                autoComplete="email"
-                            />
+                            <div className="input-wrapper">
+
+                                <span className="input-icon">
+                                    @
+                                </span>
+
+                                <input
+                                    id="login-email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(event) =>
+                                        setEmail(event.target.value)
+                                    }
+                                    placeholder="you@example.com"
+                                    autoComplete="email"
+                                />
+
+                            </div>
 
                         </div>
 
                         <div className="login-field">
 
-                            <label htmlFor="login-password">
-                                Password
-                            </label>
+                            <div className="password-label-row">
 
-                            <input
-                                id="login-password"
-                                type="password"
-                                value={password}
-                                onChange={(event) =>
-                                    setPassword(event.target.value)
-                                }
-                                placeholder="Enter your password"
-                                autoComplete="current-password"
-                            />
+                                <label htmlFor="login-password">
+                                    Password
+                                </label>
+
+                            </div>
+
+                            <div className="input-wrapper">
+
+                                <span className="input-icon">
+                                    •
+                                </span>
+
+                                <input
+                                    id="login-password"
+                                    type={
+                                        showPassword
+                                            ? "text"
+                                            : "password"
+                                    }
+                                    value={password}
+                                    onChange={(event) =>
+                                        setPassword(event.target.value)
+                                    }
+                                    placeholder="Enter your password"
+                                    autoComplete="current-password"
+                                />
+
+                                <button
+                                    type="button"
+                                    className="password-toggle"
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (current) => !current
+                                        )
+                                    }
+                                    aria-label={
+                                        showPassword
+                                            ? "Hide password"
+                                            : "Show password"
+                                    }
+                                >
+                                    {showPassword ? "Hide" : "Show"}
+                                </button>
+
+                            </div>
 
                         </div>
 
@@ -210,23 +283,28 @@ function Login({ onLogin, onShowRegister }) {
                         >
 
                             {loading ? (
-
                                 <>
                                     <span className="spinner"></span>
-                                    Logging in...
+                                    Signing in...
                                 </>
-
                             ) : (
-
                                 <>
-                                    🔐 Login
+                                    Sign in
+                                    <span className="button-arrow">
+                                        →
+                                    </span>
                                 </>
-
                             )}
 
                         </button>
 
                     </form>
+
+                    <div className="divider">
+                        <span></span>
+                        <p>NEW TO VOICEFLOW?</p>
+                        <span></span>
+                    </div>
 
                     <div className="create-account-section">
 
@@ -239,14 +317,20 @@ function Login({ onLogin, onShowRegister }) {
                             className="create-account-button"
                             onClick={handleCreateAccount}
                         >
-                            Create Account
+                            Create account
                         </button>
 
                     </div>
 
+                </section>
+
+                <div className="login-footer">
+                    <span>Secure authentication</span>
+                    <span className="footer-dot">•</span>
+                    <span>VoiceFlow</span>
                 </div>
 
-            </div>
+            </main>
 
         </div>
     );
