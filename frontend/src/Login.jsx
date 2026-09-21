@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./Login.css";
 
-const API_BASE_URL = "http://localhost:8080";
+
+const API_BASE_URL = import.meta.env.DEV ? "http://localhost:8080" : "";
 
 function Login({ onLogin, onShowRegister }) {
     const [email, setEmail] = useState("");

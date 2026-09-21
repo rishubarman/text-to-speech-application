@@ -3,7 +3,8 @@ import "./App.css";
 import Login from "./Login";
 import Register from "./Register";
 
-const API_BASE_URL = "http://localhost:8080";
+
+const API_BASE_URL = import.meta.env.DEV ? "http://localhost:8080" : "";
 const MAX_CHARACTERS = 500;
 
 const voiceOptions = {
